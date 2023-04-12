@@ -3,30 +3,67 @@
 
 int main(){
     Scene3D* perro = Scene3D_create();
-    Triangle3DNode* caca = malloc(sizeof(Triangle3DNode));
 
-    Coordinate3D a;
-    a.x = 1.0;
-    a.y = 1.0;
-    a.z = 1.0;
+    Coordinate3D coordinate;
+    coordinate = (Coordinate3D){0, 0, 0};
 
-    Coordinate3D b;
-    b.x = 2.0;
-    b.y = 2.0;
-    b.z = 2.0;
+    Scene3D_add_pyramid(perro, coordinate, 10, 10, "up");
 
-    Coordinate3D c;
-    c.x = 3.0;
-    c.y = 3.0;
-    c.z = 3.0;
+    // Triangle3DNode* caca = malloc(sizeof(Triangle3DNode));
 
-    caca->triangle.a = a;
-    caca->triangle.b = b;
-    caca->triangle.c = c;
-    caca->next = NULL;
+    // Coordinate3D coordinate;
 
-    perro->root = caca;
-    perro->count = 1;
+    // // first
+    // coordinate = (Coordinate3D){-25, 0, -25};
+    // caca->triangle.a = coordinate;
+    // coordinate = (Coordinate3D){25, 0, -25};
+    // caca->triangle.b = coordinate;
+    // coordinate = (Coordinate3D){0, 50, 0};
+    // caca->triangle.c = coordinate;
+
+    // Triangle3DNode* caca2 = malloc(sizeof(Triangle3DNode));
+
+    // // second
+    // coordinate = (Coordinate3D){-25, 0, -25};
+    // caca2->triangle.a = coordinate;
+    // coordinate = (Coordinate3D){-25, 0, 25};
+    // caca2->triangle.b = coordinate;
+    // coordinate = (Coordinate3D){0, 50, 0};
+    // caca2->triangle.c = coordinate;
+
+    // Triangle3DNode* caca3 = malloc(sizeof(Triangle3DNode));
+
+    // // third
+    // coordinate = (Coordinate3D){25, 0, 25};
+    // caca3->triangle.a = coordinate;
+    // coordinate = (Coordinate3D){-25, 0, 25};
+    // caca3->triangle.b = coordinate;
+    // coordinate = (Coordinate3D){0, 50, 0};
+    // caca3->triangle.c = coordinate;
+
+    // Triangle3DNode* caca4 = malloc(sizeof(Triangle3DNode));
+
+    // //fourth
+    // coordinate = (Coordinate3D){25, 0, 25};
+    // caca4->triangle.a = coordinate;
+    // coordinate = (Coordinate3D){25, 0, -25};
+    // caca4->triangle.b = coordinate;
+    // coordinate = (Coordinate3D){0, 50, 0};
+    // caca4->triangle.c = coordinate;
+
+    // perro->root = caca;
+    // perro->count = 1;
+
+    // caca->next = caca2;
+    // perro->count = 2;
+
+    // caca2->next = caca3;
+    // perro->count = 3;
+
+    // caca3->next = caca4;
+    // perro->count = 4;
+
+    // caca4->next = NULL;
 
     Scene3D_write_stl_text(perro, "ahi.stl");
 
