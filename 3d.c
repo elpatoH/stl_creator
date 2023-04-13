@@ -148,39 +148,63 @@ void Scene3D_add_pyramid(Scene3D *scene, Coordinate3D origin, double width, doub
     // Calculate half of the width and height
     double halfWidth = width / 2.0;
 
-    if (strcmp(orientation, "foward") == 0){
+    if (strcmp(orientation, "forward") == 0){
         //forward/backward refers to +/- on the Y axis
-        // Coordinate3D cordenadaA;
-        // cordenadaA = (Coordinate3D){(origin.x + halfWidth), (origin.y + halfWidth), (origin.z)};
+        Coordinate3D cordenadaA;
+        cordenadaA = (Coordinate3D){(origin.x + halfWidth), (origin.y + halfWidth), (origin.z)};
 
-        // Coordinate3D cordenadaB;
-        // cordenadaB = (Coordinate3D){(origin.x - halfWidth), (origin.y + halfWidth), (origin.z)};
+        Coordinate3D cordenadaB;
+        cordenadaB = (Coordinate3D){(origin.x - halfWidth), (origin.y + halfWidth), (origin.z)};
 
-        // Coordinate3D cordenadaC;
-        // cordenadaC = (Coordinate3D){(origin.x - halfWidth), (origin.y - halfWidth), (origin.z)};
+        Coordinate3D cordenadaC;
+        cordenadaC = (Coordinate3D){(origin.x - halfWidth), (origin.y - halfWidth), (origin.z)};
 
-        // Coordinate3D cordenadaD;
-        // cordenadaD = (Coordinate3D){(origin.x + halfWidth), (origin.y - halfWidth), (origin.z)};
+        Coordinate3D cordenadaD;
+        cordenadaD = (Coordinate3D){(origin.x + halfWidth), (origin.y - halfWidth), (origin.z)};
 
-        // Coordinate3D tip;
-        // tip = (Coordinate3D){(origin.x), (origin.y), (origin.z + height)};
+        Coordinate3D tip;
+        tip = (Coordinate3D){(origin.x), (origin.y), (origin.z + height)};
+        
+        Scene3D_add_quadrilateral(scene, cordenadaA, cordenadaB, cordenadaC, cordenadaD);
+
+        Triangle3D triangle_1 = (Triangle3D) {cordenadaA, cordenadaB, tip};
+        Triangle3D triangle_2 = (Triangle3D) {cordenadaA, cordenadaD, tip};
+        Triangle3D triangle_3 = (Triangle3D) {cordenadaD, cordenadaC, tip};
+        Triangle3D triangle_4 = (Triangle3D) {cordenadaC, cordenadaB, tip};
+
+        Scene3D_add_triangle(scene, triangle_1);
+        Scene3D_add_triangle(scene, triangle_2);
+        Scene3D_add_triangle(scene, triangle_3);
+        Scene3D_add_triangle(scene, triangle_4);
     }
     else if (strcmp(orientation, "backward") == 0){
         //forward/backward refers to +/- on the Y axis
-        // Coordinate3D cordenadaA;
-        // cordenadaA = (Coordinate3D){(origin.x + halfWidth), (origin.y + halfWidth), (origin.z)};
+        Coordinate3D cordenadaA;
+        cordenadaA = (Coordinate3D){(origin.x + halfWidth), (origin.y + halfWidth), (origin.z)};
 
-        // Coordinate3D cordenadaB;
-        // cordenadaB = (Coordinate3D){(origin.x - halfWidth), (origin.y + halfWidth), (origin.z)};
+        Coordinate3D cordenadaB;
+        cordenadaB = (Coordinate3D){(origin.x - halfWidth), (origin.y + halfWidth), (origin.z)};
 
-        // Coordinate3D cordenadaC;
-        // cordenadaC = (Coordinate3D){(origin.x - halfWidth), (origin.y - halfWidth), (origin.z)};
+        Coordinate3D cordenadaC;
+        cordenadaC = (Coordinate3D){(origin.x - halfWidth), (origin.y - halfWidth), (origin.z)};
 
-        // Coordinate3D cordenadaD;
-        // cordenadaD = (Coordinate3D){(origin.x + halfWidth), (origin.y - halfWidth), (origin.z)};
+        Coordinate3D cordenadaD;
+        cordenadaD = (Coordinate3D){(origin.x + halfWidth), (origin.y - halfWidth), (origin.z)};
 
-        // Coordinate3D tip;
-        // tip = (Coordinate3D){(origin.x), (origin.y), (origin.z - height)};
+        Coordinate3D tip;
+        tip = (Coordinate3D){(origin.x), (origin.y), (origin.z - height)};
+
+        Scene3D_add_quadrilateral(scene, cordenadaA, cordenadaB, cordenadaC, cordenadaD);
+
+        Triangle3D triangle_1 = (Triangle3D) {cordenadaA, cordenadaB, tip};
+        Triangle3D triangle_2 = (Triangle3D) {cordenadaA, cordenadaD, tip};
+        Triangle3D triangle_3 = (Triangle3D) {cordenadaD, cordenadaC, tip};
+        Triangle3D triangle_4 = (Triangle3D) {cordenadaC, cordenadaB, tip};
+
+        Scene3D_add_triangle(scene, triangle_1);
+        Scene3D_add_triangle(scene, triangle_2);
+        Scene3D_add_triangle(scene, triangle_3);
+        Scene3D_add_triangle(scene, triangle_4);
     }
     else if (strcmp(orientation, "up") == 0){
         //up/down refers to +/- on the Z axis
@@ -213,60 +237,106 @@ void Scene3D_add_pyramid(Scene3D *scene, Coordinate3D origin, double width, doub
     }
     else if (strcmp(orientation, "down") == 0){
         //up/down refers to +/- on the Z axis
-        // Coordinate3D cordenadaA;
-        // cordenadaA = (Coordinate3D){(origin.x - halfWidth), (origin.y), (origin.z - halfWidth)};
+        Coordinate3D cordenadaA;
+        cordenadaA = (Coordinate3D){(origin.x - halfWidth), (origin.y), (origin.z - halfWidth)};
 
-        // Coordinate3D cordenadaB;
-        // cordenadaB = (Coordinate3D){(origin.x - halfWidth), (origin.y), (origin.z + halfWidth)};
+        Coordinate3D cordenadaB;
+        cordenadaB = (Coordinate3D){(origin.x - halfWidth), (origin.y), (origin.z + halfWidth)};
 
-        // Coordinate3D cordenadaC;
-        // cordenadaC = (Coordinate3D){(origin.x + halfWidth), (origin.y), (origin.z - halfWidth)};
+        Coordinate3D cordenadaC;
+        cordenadaC = (Coordinate3D){(origin.x + halfWidth), (origin.y), (origin.z - halfWidth)};
 
-        // Coordinate3D cordenadaD;
-        // cordenadaD = (Coordinate3D){(origin.x + halfWidth), (origin.y), (origin.z + halfWidth)};
+        Coordinate3D cordenadaD;
+        cordenadaD = (Coordinate3D){(origin.x + halfWidth), (origin.y), (origin.z + halfWidth)};
 
-        // Coordinate3D tip;
-        // tip = (Coordinate3D){(origin.x), (origin.y - height), (origin.z)};
+        Coordinate3D tip;
+        tip = (Coordinate3D){(origin.x), (origin.y - height), (origin.z)};
+
+        Scene3D_add_quadrilateral(scene, cordenadaA, cordenadaB, cordenadaC, cordenadaD);
+
+        Triangle3D triangle_1 = (Triangle3D) {cordenadaA, cordenadaB, tip};
+        Triangle3D triangle_2 = (Triangle3D) {cordenadaB, cordenadaD, tip};
+        Triangle3D triangle_3 = (Triangle3D) {cordenadaD, cordenadaC, tip};
+        Triangle3D triangle_4 = (Triangle3D) {cordenadaC, cordenadaA, tip};
+
+        Scene3D_add_triangle(scene, triangle_1);
+        Scene3D_add_triangle(scene, triangle_2);
+        Scene3D_add_triangle(scene, triangle_3);
+        Scene3D_add_triangle(scene, triangle_4);
     }
     else if (strcmp(orientation, "right") == 0){
         //right/left refers to +/- on the X axis
-        // Coordinate3D cordenadaA;
-        // cordenadaA = (Coordinate3D){(origin.x), (origin.y + halfWidth), (origin.z + halfWidth)};
+        Coordinate3D cordenadaA;
+        cordenadaA = (Coordinate3D){(origin.x), (origin.y + halfWidth), (origin.z + halfWidth)};
 
-        // Coordinate3D cordenadaB;
-        // cordenadaB = (Coordinate3D){(origin.x), (origin.y + halfWidth), (origin.z - halfWidth)};
+        Coordinate3D cordenadaB;
+        cordenadaB = (Coordinate3D){(origin.x), (origin.y + halfWidth), (origin.z - halfWidth)};
 
-        // Coordinate3D cordenadaC;
-        // cordenadaC = (Coordinate3D){(origin.x), (origin.y - halfWidth), (origin.z - halfWidth)};
+        Coordinate3D cordenadaC;
+        cordenadaC = (Coordinate3D){(origin.x), (origin.y - halfWidth), (origin.z - halfWidth)};
 
-        // Coordinate3D cordenadaD;
-        // cordenadaD = (Coordinate3D){(origin.x), (origin.y - halfWidth), (origin.z + halfWidth)};
+        Coordinate3D cordenadaD;
+        cordenadaD = (Coordinate3D){(origin.x), (origin.y - halfWidth), (origin.z + halfWidth)};
 
-        // Coordinate3D tip;
-        // tip = (Coordinate3D){(origin.x + height), (origin.y), (origin.z)};
+        Coordinate3D tip;
+        tip = (Coordinate3D){(origin.x + height), (origin.y), (origin.z)};
+
+        Scene3D_add_quadrilateral(scene, cordenadaA, cordenadaB, cordenadaC, cordenadaD);
+
+        Triangle3D triangle_1 = (Triangle3D) {cordenadaA, cordenadaB, tip};
+        Triangle3D triangle_2 = (Triangle3D) {cordenadaA, cordenadaD, tip};
+        Triangle3D triangle_3 = (Triangle3D) {cordenadaD, cordenadaC, tip};
+        Triangle3D triangle_4 = (Triangle3D) {cordenadaC, cordenadaB, tip};
+
+        Scene3D_add_triangle(scene, triangle_1);
+        Scene3D_add_triangle(scene, triangle_2);
+        Scene3D_add_triangle(scene, triangle_3);
+        Scene3D_add_triangle(scene, triangle_4);
     }
     else if (strcmp(orientation, "left") == 0){
         //right/left refers to +/- on the X axis
-        // Coordinate3D cordenadaA;
-        // cordenadaA = (Coordinate3D){(origin.x), (origin.y + halfWidth), (origin.z + halfWidth)};
+        Coordinate3D cordenadaA;
+        cordenadaA = (Coordinate3D){(origin.x), (origin.y + halfWidth), (origin.z + halfWidth)};
 
-        // Coordinate3D cordenadaB;
-        // cordenadaB = (Coordinate3D){(origin.x), (origin.y + halfWidth), (origin.z - halfWidth)};
+        Coordinate3D cordenadaB;
+        cordenadaB = (Coordinate3D){(origin.x), (origin.y + halfWidth), (origin.z - halfWidth)};
 
-        // Coordinate3D cordenadaC;
-        // cordenadaC = (Coordinate3D){(origin.x), (origin.y - halfWidth), (origin.z - halfWidth)};
+        Coordinate3D cordenadaC;
+        cordenadaC = (Coordinate3D){(origin.x), (origin.y - halfWidth), (origin.z - halfWidth)};
 
-        // Coordinate3D cordenadaD;
-        // cordenadaD = (Coordinate3D){(origin.x), (origin.y - halfWidth), (origin.z + halfWidth)};
+        Coordinate3D cordenadaD;
+        cordenadaD = (Coordinate3D){(origin.x), (origin.y - halfWidth), (origin.z + halfWidth)};
 
-        // Coordinate3D tip;
-        // tip = (Coordinate3D){(origin.x - height), (origin.y), (origin.z)};
+        Coordinate3D tip;
+        tip = (Coordinate3D){(origin.x - height), (origin.y), (origin.z)};
+
+        Scene3D_add_quadrilateral(scene, cordenadaA, cordenadaB, cordenadaC, cordenadaD);
+
+        Triangle3D triangle_1 = (Triangle3D) {cordenadaA, cordenadaB, tip};
+        Triangle3D triangle_2 = (Triangle3D) {cordenadaA, cordenadaD, tip};
+        Triangle3D triangle_3 = (Triangle3D) {cordenadaD, cordenadaC, tip};
+        Triangle3D triangle_4 = (Triangle3D) {cordenadaC, cordenadaB, tip};
+
+        Scene3D_add_triangle(scene, triangle_1);
+        Scene3D_add_triangle(scene, triangle_2);
+        Scene3D_add_triangle(scene, triangle_3);
+        Scene3D_add_triangle(scene, triangle_4);
     }
     else{
-        printf("Invalid direction");
+        printf("Invalid direction %s", orientation);
     }
 }
 
+
+/*
+should add a cuboid in 3D space to the passed-in scene. The parameters
+specify the scene to add to and where the cuboid should exist in 3D space. The origin represents the center
+of the cuboid. The width, height, and depth represent the length on the x axis, length on the y axis, and
+length on the z axis, respectively. Our library (and STL files) represent shapes using only triangles, so how can
+one build a cuboid? Using the quadrilateral starter code, each side would have four triangles. Thus, each side
+of the 6 sides of the cuboid can be represented with 4 triangles, so creating a cuboid would use 24 triangles in
+total.
+*/
 void Scene3D_add_cuboid(Scene3D *scene, Coordinate3D origin, double width, double height, double depth)
 {
 }

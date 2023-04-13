@@ -2,70 +2,71 @@
 #include <stdlib.h>
 
 int main(){
+    //perro
     Scene3D* perro = Scene3D_create();
 
     Coordinate3D coordinate;
     coordinate = (Coordinate3D){0, 0, 0};
 
-    Scene3D_add_pyramid(perro, coordinate, 10, 10, "up");
+    Scene3D_add_pyramid(perro, coordinate, 10, 10, "down");
 
-    // Triangle3DNode* caca = malloc(sizeof(Triangle3DNode));
+    //perro2
+    Scene3D* perro2 = Scene3D_create();
 
-    // Coordinate3D coordinate;
+    Coordinate3D coordinate2;
+    coordinate2 = (Coordinate3D){0, 0, 0};
 
-    // // first
-    // coordinate = (Coordinate3D){-25, 0, -25};
-    // caca->triangle.a = coordinate;
-    // coordinate = (Coordinate3D){25, 0, -25};
-    // caca->triangle.b = coordinate;
-    // coordinate = (Coordinate3D){0, 50, 0};
-    // caca->triangle.c = coordinate;
+    Scene3D_add_pyramid(perro2, coordinate2, 10, 10, "up");
 
-    // Triangle3DNode* caca2 = malloc(sizeof(Triangle3DNode));
+    //perro3
+    Scene3D* perro3 = Scene3D_create();
 
-    // // second
-    // coordinate = (Coordinate3D){-25, 0, -25};
-    // caca2->triangle.a = coordinate;
-    // coordinate = (Coordinate3D){-25, 0, 25};
-    // caca2->triangle.b = coordinate;
-    // coordinate = (Coordinate3D){0, 50, 0};
-    // caca2->triangle.c = coordinate;
+    Coordinate3D coordinate3;
+    coordinate3 = (Coordinate3D){0, 0, 0};
 
-    // Triangle3DNode* caca3 = malloc(sizeof(Triangle3DNode));
+    Scene3D_add_pyramid(perro3, coordinate3, 10, 10, "right");
 
-    // // third
-    // coordinate = (Coordinate3D){25, 0, 25};
-    // caca3->triangle.a = coordinate;
-    // coordinate = (Coordinate3D){-25, 0, 25};
-    // caca3->triangle.b = coordinate;
-    // coordinate = (Coordinate3D){0, 50, 0};
-    // caca3->triangle.c = coordinate;
+    //perro4
+    Scene3D* perro4 = Scene3D_create();
 
-    // Triangle3DNode* caca4 = malloc(sizeof(Triangle3DNode));
+    Coordinate3D coordinate4;
+    coordinate4 = (Coordinate3D){0, 0, 0};
 
-    // //fourth
-    // coordinate = (Coordinate3D){25, 0, 25};
-    // caca4->triangle.a = coordinate;
-    // coordinate = (Coordinate3D){25, 0, -25};
-    // caca4->triangle.b = coordinate;
-    // coordinate = (Coordinate3D){0, 50, 0};
-    // caca4->triangle.c = coordinate;
+    Scene3D_add_pyramid(perro4, coordinate4, 10, 10, "left");
 
-    // perro->root = caca;
-    // perro->count = 1;
+    //perro5
+    Scene3D* perro5 = Scene3D_create();
 
-    // caca->next = caca2;
-    // perro->count = 2;
+    Coordinate3D coordinate5;
+    coordinate5 = (Coordinate3D){0, 0, 0};
 
-    // caca2->next = caca3;
-    // perro->count = 3;
+    Scene3D_add_pyramid(perro5, coordinate5, 10, 10, "backward");
 
-    // caca3->next = caca4;
-    // perro->count = 4;
+    //perro6
+    Scene3D* perro6 = Scene3D_create();
 
-    // caca4->next = NULL;
+    Coordinate3D coordinate6;
+    coordinate6 = (Coordinate3D){0, 0, 0};
 
+    Scene3D_add_pyramid(perro6, coordinate6, 10, 10, "forward");
+
+    //star
+    Scene3D* star = Scene3D_create();
+    char* directions[] = {"up", "down", "left", "right", "forward", "backward"};
+    Coordinate3D origin = (Coordinate3D){100, 100, 100};
+    for (int i = 0; i <= 5; i ++) {
+        Scene3D_add_pyramid(star, origin, 20, 30, directions[i]);
+    }
+    Scene3D_write_stl_text(star, "star.stl");
+
+    //write
     Scene3D_write_stl_text(perro, "ahi.stl");
+    Scene3D_write_stl_text(perro2, "ahi2.stl");
+    Scene3D_write_stl_text(perro3, "ahi3.stl");
+    Scene3D_write_stl_text(perro4, "ahi4.stl");
+    Scene3D_write_stl_text(perro5, "ahi5.stl");
+    Scene3D_write_stl_text(perro6, "ahi6.stl"); 
+    Scene3D_write_stl_text(star, "star.stl"); 
 
     Scene3D_destroy(perro);
 }
