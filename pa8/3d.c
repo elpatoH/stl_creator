@@ -12,7 +12,7 @@ Scene3D *Scene3D_create()
     return new3d;
 }
 
-/// @brief 
+/// @brief helper function for scene3d_destroy
 /// @param node 
 void destroy(Triangle3DNode* node){
     if (node == NULL){
@@ -36,7 +36,7 @@ void Scene3D_destroy(Scene3D *scene)
     
 }
 
-/// @brief 
+/// @brief writes a x,y,z into the file
 /// @param point 
 /// @param file 
 void write_point(Coordinate3D point, FILE* file){
@@ -44,7 +44,7 @@ void write_point(Coordinate3D point, FILE* file){
     fflush(file);
 }
 
-/// @brief 
+/// @brief recursively finds and writes the triangle into a file
 /// @param target_shape 
 /// @param file 
 /// @param node 
@@ -90,6 +90,9 @@ void Scene3D_write_stl_text(Scene3D *scene, char *file_name)
     fclose(file);
 }
 
+/// @brief allocates and initialices a new triangle3dnode object
+/// @param triangle 
+/// @return 
 Triangle3DNode* get_triangle(Triangle3D triangle){
     Triangle3DNode* node = malloc(sizeof(Triangle3DNode));
     node->triangle.a.x = triangle.a.x;
@@ -109,6 +112,9 @@ Triangle3DNode* get_triangle(Triangle3D triangle){
     return node;
 }
 
+/// @brief adds triangle to a scene
+/// @param scene 
+/// @param triangle 
 void Scene3D_add_triangle(Scene3D *scene, Triangle3D triangle){
     if (scene->root == NULL){
         scene->root = get_triangle(triangle);
@@ -126,24 +132,6 @@ void Scene3D_add_triangle(Scene3D *scene, Triangle3D triangle){
     
 }
 
-/*
-should add a pyramid in 3D space to the passed-in scene. 
-
-The origin represents the center of the base of the pyramid. 
-The width represents the width / length of each side of the base of the pyramid. 
-The height represents how tall the point of the pyramid will be (how far away the
-point will be from the origin). 
-
-The orientation represents the direction that the top of the pyramid will point towards. 
-    expect to be one: “forward” “backward” “up” “down” “left” “right”. 
-    right/left refers to +/- on the X axis, 
-    forward/backward refers to +/- on the Y axis, and
-    up/down refers to +/- on the Z axis.
-
-Creating a pyramid will use 8 shapes in total. 
-Four for the base, and one for each side. 
-
-*/
 void Scene3D_add_pyramid(Scene3D *scene, Coordinate3D origin, double width, double height, char *orientation)
 {
     // Calculate half of the width and height
@@ -330,18 +318,6 @@ void Scene3D_add_pyramid(Scene3D *scene, Coordinate3D origin, double width, doub
     }
 }
 
-
-/*
-should add a cuboid in 3D space to the passed-in scene. 
-The origin represents the center of the cuboid. 
-The width, height, and depth represent the length on the x axis, length on the y axis, and
-length on the z axis, respectively.
-
-Our library (and STL files) represent shapes using only triangles, so how can
-one build a cuboid? Using the quadrilateral starter code, each side would have four triangles. Thus, each side
-of the 6 sides of the cuboid can be represented with 4 triangles, so creating a cuboid would use 24 triangles in
-total.
-*/
 void Scene3D_add_cuboid(Scene3D *scene, Coordinate3D origin, double width, double height, double depth)
 {
     double halfWidth = width / 2.0;
