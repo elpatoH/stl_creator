@@ -407,7 +407,7 @@ void find_triangle_binary(int target_shape, FILE* file, Triangle3DNode* node, in
 void Scene3D_write_stl_binary(Scene3D *scene, char *file_name)
 {
     //open file
-    FILE* file = fopen(file_name, "w");
+    FILE* file = fopen(file_name, "wb");
     if (file == NULL) {
         fprintf(stderr, "Opening file failed with code %d.\n", errno);
         return;
@@ -447,9 +447,9 @@ void Scene3D_write_stl_binary(Scene3D *scene, char *file_name)
 /// @param radius 
 /// @param phi 
 /// @return 
-double sphere_to_car_z(double radius, double phi){
+float sphere_to_car_z(float radius, float phi){
     // convert angles to radians
-    double phi_radians = phi * PI / 180.0; 
+    float phi_radians = phi * PI / 180.0; 
     return (radius * cos(phi_radians));
 }
 
@@ -458,10 +458,10 @@ double sphere_to_car_z(double radius, double phi){
 /// @param theta 
 /// @param phi 
 /// @return 
-double sphere_to_car_y(double radius, double theta, double phi){
+float sphere_to_car_y(float radius, float theta, float phi){
     // convert angles to radians
-    double theta_radians = theta * PI / 180.0; 
-    double phi_radians = phi * PI / 180.0; 
+    float theta_radians = theta * PI / 180.0; 
+    float phi_radians = phi * PI / 180.0; 
     return (radius * sin(phi_radians) * sin(theta_radians));
 }
 
@@ -470,91 +470,61 @@ double sphere_to_car_y(double radius, double theta, double phi){
 /// @param theta 
 /// @param phi 
 /// @return 
-double sphere_to_car_x(double radius, double theta, double phi){
+float sphere_to_car_x(float radius, float theta, float phi){
     // convert angles to radians
-    double theta_radians = theta * PI / 180.0; 
-    double phi_radians = phi * PI / 180.0; 
+    float theta_radians = theta * PI / 180.0; 
+    float phi_radians = phi * PI / 180.0; 
     return (radius * sin(phi_radians) * cos(theta_radians));
 }
 
-/// @brief 
-/// @param radius 
-/// @param theta 
-/// @param phi 
-/// @return 
-double* sphere_cords_to_cartesian(double radius, double theta, double phi){
-    double* cords = malloc(3);
-    cords[0] = sphere_to_car_x(radius, theta, phi);
-    cords[1] = sphere_to_car_y(radius, theta, phi);
-    cords[2] = sphere_to_car_z(radius, phi);
-    return cords;
-}
-
-double roundToDecimalPlaces(double value, int decimalPlaces) {
-    double multiplier = pow(10, decimalPlaces);
-    double rounded = round(value * multiplier) / multiplier;
-    double roundedUp = ceil(value * multiplier) / multiplier;
-    double roundedDown = floor(value * multiplier) / multiplier;
-    double diffUp = roundedUp - value;
-    double diffDown = value - roundedDown;
-    if (diffUp < 0.5 / multiplier && diffDown < 0.5 / multiplier) {
-        if (diffUp < diffDown) {
-            return roundedUp;
-        } else {
-            return roundedDown;
-        }
-    } else if (diffUp < 0.5 / multiplier) {
-        return roundedUp;
-    } else if (diffDown < 0.5 / multiplier) {
-        return roundedDown;
-    } else {
-        return rounded;
-    }
+float round2(float value) {
+    return round(value * 10000.0) / 10000.0;
 }
 
 void Scene3D_add_sphere(Scene3D *scene, Coordinate3D origin, double radius, double increment)
 {
-    for (double phi = increment; phi <= 180; phi += increment){
-        for (double theta = 0; theta < 360; theta += increment){
-            /*
-            Convert the following four spherical coordinates to cartesian coordinates (x, y, z):
-                ● (radius, theta, phi)
-                ● (radius, theta, phi - increment)
-                ● (radius, theta - increment, phi)
-                ● (radius, theta - increment, phi - increment)
-            */
-           double* cord1 = sphere_cords_to_cartesian(radius, theta, phi);
-           double* cord2 = sphere_cords_to_cartesian(radius, theta, phi - increment);
-           double* cord3 = sphere_cords_to_cartesian(radius, theta - increment, phi);
-           double* cord4 = sphere_cords_to_cartesian(radius, theta - increment, phi - increment);
+    for (float phi = increment; phi <= 180; phi += increment){
+        for (float theta = 0; theta < 360; theta += increment){
+           Coordinate3D cordinate1;
+           cordinate1.x = round2(sphere_to_car_x(radius, theta, phi));
+           cordinate1.y = round2(sphere_to_car_y(radius, theta, phi));
+           cordinate1.z = round2(sphere_to_car_z(radius, phi));
 
-           double value1 = 0.00015;
+           Coordinate3D cordinate2;
+           cordinate2.x = round2(sphere_to_car_x(radius, theta, phi - increment));
+           cordinate2.y = round2(sphere_to_car_y(radius, theta, phi - increment));
+           cordinate2.z = round2(sphere_to_car_z(radius, phi - increment));
 
-           double perro = roundToDecimalPlaces(value1, 4);
+           Coordinate3D cordinate3;
+           cordinate3.x = round2(sphere_to_car_x(radius, theta - increment, phi));
+           cordinate3.y = round2(sphere_to_car_y(radius, theta - increment, phi));
+           cordinate3.z = round2(sphere_to_car_z(radius, phi));
 
-           printf("wtf: %.4f\n", perro);
-           printf("coordinates: (%.5f,%.5f,%.5f)\n", roundToDecimalPlaces(cord1[0], 4), roundToDecimalPlaces(cord1[0], 4), roundToDecimalPlaces(cord1[0], 4));
-           printf("coordinates: (%.5f,%.5f,%.5f)\n", roundToDecimalPlaces(cord2[0], 4), roundToDecimalPlaces(cord2[0], 4), roundToDecimalPlaces(cord2[0], 4));
-           printf("coordinates: (%.5f,%.5f,%.5f)\n", roundToDecimalPlaces(cord3[0], 4), roundToDecimalPlaces(cord3[0], 4), roundToDecimalPlaces(cord3[0], 4));
-           printf("coordinates: (%.5f,%.5f,%.5f)\n\n", roundToDecimalPlaces(cord4[0], 4), roundToDecimalPlaces(cord4[0], 4), roundToDecimalPlaces(cord4[0], 4));
-           /*
-           Place a quadrilateral between these four cartesian coordinates
-                ● Coordinates should be rounded to four decimal places using standard
-                mathematical rounding. For example, 0.00015 rounds to 0.0002, and 0.00014
-                rounds to 0.0001.
-                ● When dealing with these coordinates, keep in mind to offset everything by the
-                origin (x, y, z) values
-            */
+           Coordinate3D cordinate4;
+           cordinate4.x = round2(sphere_to_car_x(radius, theta - increment, phi - increment));
+           cordinate4.y = round2(sphere_to_car_y(radius, theta - increment, phi - increment));
+           cordinate4.z = round2(sphere_to_car_z(radius, phi - increment));
 
-           fflush(stdout);
-           free(cord1);
-           free(cord2);
-           free(cord3);
-           free(cord4);
+           //offset
+           cordinate1.x += origin.x;
+           cordinate1.y += origin.y;
+           cordinate1.z += origin.z;
+
+           cordinate2.x += origin.x;
+           cordinate2.y += origin.y;
+           cordinate2.z += origin.z;
+           
+           cordinate3.x += origin.x;
+           cordinate3.y += origin.y;
+           cordinate3.z += origin.z;
+
+           cordinate4.x += origin.x;
+           cordinate4.y += origin.y;
+           cordinate4.z += origin.z;
+
+           Scene3D_add_quadrilateral(scene, cordinate1, cordinate2, cordinate3, cordinate4);
         }
     }
-    double x = atan2(2, 1);
-    printf("double: %f", x);
 }
 
 void Scene3D_add_fractal(Scene3D *scene, Coordinate3D origin, double size, int levels)
