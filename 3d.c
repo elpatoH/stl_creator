@@ -441,6 +441,7 @@ void Scene3D_write_stl_binary(Scene3D *scene, char *file_name)
     //end file
     fflush(file);
     fclose(file);
+    free(buffer);
 }
 
 /// @brief 
@@ -529,4 +530,45 @@ void Scene3D_add_sphere(Scene3D *scene, Coordinate3D origin, double radius, doub
 
 void Scene3D_add_fractal(Scene3D *scene, Coordinate3D origin, double size, int levels)
 {
+    if (levels >= 1){
+        Scene3D_add_cuboid(scene, origin, size, size, size);
+
+        int newSize = size / 2;
+
+        Coordinate3D newOriginY1;
+        newOriginY1.x = origin.x;
+        newOriginY1.y = origin.y + (size / 2);
+        newOriginY1.z = origin.z;
+        Scene3D_add_fractal(scene, newOriginY1, newSize, levels - 1);
+
+        Coordinate3D newOriginY2;
+        newOriginY2.x = origin.x;
+        newOriginY2.y = origin.y - (size / 2);
+        newOriginY2.z = origin.z;
+        Scene3D_add_fractal(scene, newOriginY2, newSize, levels - 1);
+
+        Coordinate3D newOriginX1;
+        newOriginX1.x = origin.x + (size / 2);
+        newOriginX1.y = origin.y;
+        newOriginX1.z = origin.z;
+        Scene3D_add_fractal(scene, newOriginX1, newSize, levels - 1);
+
+        Coordinate3D newOriginX2;
+        newOriginX2.x = origin.x - (size / 2);
+        newOriginX2.y = origin.y;
+        newOriginX2.z = origin.z;
+        Scene3D_add_fractal(scene, newOriginX2, newSize, levels - 1);
+
+        Coordinate3D newOriginZ1;
+        newOriginZ1.x = origin.x;
+        newOriginZ1.y = origin.y;
+        newOriginZ1.z = origin.z + (size / 2);
+        Scene3D_add_fractal(scene, newOriginZ1, newSize, levels - 1);
+
+        Coordinate3D newOriginZ2;
+        newOriginZ2.x = origin.x;
+        newOriginZ2.y = origin.y;
+        newOriginZ2.z = origin.z - (size / 2);
+        Scene3D_add_fractal(scene, newOriginZ2, newSize, levels - 1);
+    }
 }
