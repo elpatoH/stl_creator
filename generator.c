@@ -10,16 +10,16 @@ of walls.
 
 int main(){
     Scene3D* s = Scene3D_create();
-
-    Coordinate3D origin = (Coordinate3D){-50, 0 ,0};
-    Scene3D_add_sphere(s, origin, 45, 5);
-
-    origin = (Coordinate3D){50, 0 ,0};
-    Scene3D_add_sphere(s, origin, 45, 5);
-
-    origin = (Coordinate3D){0, 0, 0};
-    Scene3D_add_cuboid(s, origin, 20, 20, 20);
-
-    Scene3D_write_stl_binary(s, "ion.stl");
+    int levels = 1;
+    for (int i = 1; i >= 0; i--) {
+        for (int j = 0; j < 3; j++) {
+            Coordinate3D origin = (Coordinate3D){j*100, i*100, 0};
+            Scene3D_add_fractal(s, origin, 50, levels);
+            printf("count for level %d: %ld\n", levels, s->count);
+            levels += 1;
+        }
+    }
+    Scene3D_write_stl_binary(s, "fractal.stl");
     Scene3D_destroy(s);
+
 }

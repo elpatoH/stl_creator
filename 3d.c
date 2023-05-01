@@ -559,16 +559,16 @@ void Scene3D_add_fractal(Scene3D *scene, Coordinate3D origin, double size, int l
         newOriginX2.z = origin.z;
         Scene3D_add_fractal(scene, newOriginX2, newSize, levels - 1);
 
-        Coordinate3D newOriginZ1;
-        newOriginZ1.x = origin.x;
-        newOriginZ1.y = origin.y;
-        newOriginZ1.z = origin.z + (size / 2);
-        Scene3D_add_fractal(scene, newOriginZ1, newSize, levels - 1);
+        // Coordinate3D newOriginZ1;
+        // newOriginZ1.x = origin.x;
+        // newOriginZ1.y = origin.y;
+        // newOriginZ1.z = origin.z + (size / 2);
+        // Scene3D_add_fractal(scene, newOriginZ1, newSize, levels - 1);
 
-        Coordinate3D newOriginZ2;
-        newOriginZ2.x = origin.x;
-        newOriginZ2.y = origin.y;
-        newOriginZ2.z = origin.z - (size / 2);
-        Scene3D_add_fractal(scene, newOriginZ2, newSize, levels - 1);
+        // Coordinate3D newOriginZ2;
+        // newOriginZ2.x = origin.x;
+        // newOriginZ2.y = origin.y;
+        // newOriginZ2.z = origin.z - (size / 2);
+        // Scene3D_add_fractal(scene, newOriginZ2, newSize, levels - 1);
     }
 }
